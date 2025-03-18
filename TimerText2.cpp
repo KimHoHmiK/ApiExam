@@ -49,24 +49,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	switch (iMessage) {
 	case WM_DESTROY:
 		KillTimer(hWnd, 1);
+		KillTimer(hWnd, 2);
 		PostQuitMessage(0);
 		return 0;
 	case WM_LBUTTONDOWN:
 		MessageBeep(0);
 		return 0;
 	case WM_CREATE:
-		SetTimer(hWnd, 1, 2000, NULL);
+		SetTimer(hWnd, 1, 1000, NULL);
+		SetTimer(hWnd, 2, 10000, NULL);
 		SendMessage(hWnd, WM_TIMER, 1, 0);
+		SendMessage(hWnd, WM_TIMER, 2, 0);
 		return 0;
 	case WM_TIMER:
-		GetLocalTime(&st);
-		wsprintf(sTime, TEXT("%s"), str[rand() % 3]);
+		if (wParam == 1) {
+			//2초 문자열을 위로 올리는
+			y -= 10;
+		}
+		else if (wParam == 2) {
+			//10초 문자열을 바꾸는
+			wsprintf(sTime, TEXT("%s"), str[rand() % 3]);
+			y = 100;
+		}
 		InvalidateRect(hWnd, NULL, TRUE);
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		for (int i = 100; i > 10; i--)
-			TextOut(hdc, 10, i, sTime, lstrlen(sTime));
+		TextOut(hdc, 10, y, sTime, lstrlen(sTime));
 		EndPaint(hWnd, &ps);
 		return 0;
 	}
