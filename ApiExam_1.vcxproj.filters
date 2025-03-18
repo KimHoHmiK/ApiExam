@@ -51,5 +51,11 @@
     <ClCompile Include="OnceTimer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="WmCreate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
